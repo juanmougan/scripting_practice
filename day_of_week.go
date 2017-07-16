@@ -14,7 +14,8 @@ func getFebruaryForYear(y int) int {
     return 28
 }
 
-// Returns true if the next day should be the next month's 1st
+// Returns true if the day passed should be converted to the next month's 1st.
+// E.g. passing "1970/12/32" should return true - it should be converted to "1971/01/01"
 func dayExceeded(y int, m int, d int) bool {
     days := make(map[int]int)
     days[1] = 31
@@ -36,7 +37,7 @@ func dayExceeded(y int, m int, d int) bool {
 func nextDay(y int, m int, d int) (int, int, int) {
     var yy, mm, dd int = y, m, d
     dd = dd + 1
-    if dayExceeded(y, m, d) {
+    if dayExceeded(y, m, dd) {
         dd = 1
         mm = mm + 1
     }
