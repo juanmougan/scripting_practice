@@ -115,3 +115,39 @@ func TestNextDay(t *testing.T) {
 		t.Error("expected 1970/02/29 but got", yy, mm, dd)
 	}
 }
+
+func TestDateToDays(t *testing.T) {
+	// Should return 0
+	d := 1
+    m := 1
+    y := 1970
+    days := dateToDays(y, m, d)
+    if days != 0 {
+		t.Error("expected 0 but got", days)
+    }
+
+    // Should return 1
+    d = 2
+    m = 1
+    y = 1970
+    days = dateToDays(y, m, d)
+    if days != 1 {
+		t.Error("expected 1 but got", days)
+    }
+
+    // Should return 365
+    d = 1
+    m = 1
+    y = 1971
+    days = dateToDays(y, m, d)
+    if days != 365 {
+		t.Error("expected 365 but got", days)
+    }
+}
+
+func TestDayOfWeek(t *testing.T) {
+	day := DayOfWeek(1985, 5, 15)
+	if day != "Wednesday" {
+		t.Error("expected Wednesday but got", day)
+	}
+}

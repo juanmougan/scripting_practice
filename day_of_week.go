@@ -51,15 +51,18 @@ func nextDay(y int, m int, d int) (int, int, int) {
 
 // For a given day, returns the number of days from 01/01/1970.
 func dateToDays(y int, m int, d int) (int) {
-    dd := 1
-    mm := 1
-    yy := 1970
+    dcont := 1
+    mcont := 1
+    ycont := 1970
     count := 0
-    for y != yy && m != mm && d != dd {
-        y, m, d = nextDay(y, m, d)
-        count = count + 1
+    for {
+        if y == ycont && m == mcont && d == dcont {
+            return count
+        } else {
+            ycont, mcont, dcont = nextDay(ycont, mcont, dcont)
+            count = count + 1
+        }
     }
-    return count
 }
 
 // Gets the dayshift (e.g. sunday = 0, monday = 1, etc.) 
