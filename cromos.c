@@ -6,23 +6,32 @@
  * y escribir en buffer
  */
 
-static void cat(FILE *fp)
+static void cat(FILE *fp, FILE *output_stream)
 {
     char buffer[MAX_LINE];
     while (fgets(buffer, sizeof(buffer), fp) != 0)
-         fputs(buffer, stdout);
+         fputs(buffer, output_stream);
 }
 
 int main(int argc, char **argv)
 {
     FILE *fp;
+    FILE *output_stream;
     const char *file;
-    while ((file = *++argv) != 0)
+    if (argc >= 3)  // dos nombres de archivos + program name me da 3
     {
-        if ((fp = fopen(file, "r")) != 0)
+        printf("%s %s\n", argv[1], argv[2]);
+        char* input_name = "cromos_input.txt";
+        char* output_name = "cromos_output.txt";
+        fp = fopen(input_name, "r");
+        output_stream = fopen(output_name, "w");
+        printf("%d %d\n", fp, output_stream);
+        if (fp != 0 && output_stream != 0)
         {
-            cat(fp);
+            printf("Pude abrir los dos\n");
+            cat(fp, output_stream);
             fclose(fp);
+            fclose(output_stream);
         }
     }
     return(0);
