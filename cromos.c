@@ -1,5 +1,7 @@
 #include <stdio.h>
 #define MAX_LINE 4096
+#define LATE 1
+#define NOLA 0
 
 /*
  * Leer de a una línea por vez (hasta MAX_LINE - 1 caracteres)
