@@ -20,13 +20,14 @@ typedef Cromo cromos[1000];
  * Leer de a una línea por vez (hasta MAX_LINE - 1 caracteres)
  * y armar el struct
  */
-static void cat(FILE *fp, FILE *output_stream);
+static void cat(FILE *fp, Cromo* cromos);
 
 int main(int argc, char **argv)
 {
     FILE *fp;
     FILE *output_stream;
     const char *file;
+    Cromo cromos[1000];
     printf("%s %s\n", argv[1], argv[2]);
     //char* input_name = "cromos_input.txt";
     char* input_name = "cromos.txt";
@@ -36,20 +37,21 @@ int main(int argc, char **argv)
     printf("%d %d\n", fp, output_stream);
     if (fp != 0 && output_stream != 0)
     {
-        cat(fp, output_stream);
+        cat(fp, cromos);
         fclose(fp);
         fclose(output_stream);
     }
     return(0);
 }
 
-static void cat(FILE *fp, FILE *output_stream) {
+static void cat(FILE *fp, Cromo* cromos) {
     //struct Cromo cada_cromo;
     char buffer[MAX_LINE];
     char numero[4];
     char nombre[100];
     char pais[20];
     int len = 0;
+    int i = 0;
 
     memset(numero, '\0', sizeof(numero));
     memset(nombre, '\0', sizeof(nombre));
@@ -83,5 +85,7 @@ static void cat(FILE *fp, FILE *output_stream) {
         strcpy(cromo.nombre, nombre);
         strcpy(cromo.pais, pais);
 
+        // Lo agrego al array
+        cromos[i++] = cromo;
     }
 }
