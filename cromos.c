@@ -13,8 +13,7 @@ typedef struct Cromo {
     char pais[MAX_PAIS];
 } Cromo;
 
-// Esto deberia ser asignación dinámica de memoria, no?
-typedef Cromo cromos[1000];
+struct Cromo *array;
 
 /*
  * Leer de a una línea por vez (hasta MAX_LINE - 1 caracteres)
@@ -22,12 +21,15 @@ typedef Cromo cromos[1000];
  */
 static void cat(FILE *fp, Cromo* cromos);
 
+void resizeArray(size_t n);
+
 int main(int argc, char **argv)
 {
     FILE *fp;
     FILE *output_stream;
     const char *file;
     Cromo cromos[1000];
+    array = malloc(2 * sizeof(int));
     printf("%s %s\n", argv[1], argv[2]);
     //char* input_name = "cromos_input.txt";
     char* input_name = "cromos.txt";
@@ -38,9 +40,11 @@ int main(int argc, char **argv)
     if (fp != 0 && output_stream != 0)
     {
         cat(fp, cromos);
+        printf("Nombre del primero: %s\n", array[0].nombre);
         fclose(fp);
         fclose(output_stream);
     }
+    free(array);
     return(0);
 }
 
@@ -59,6 +63,9 @@ static void cat(FILE *fp, Cromo* cromos) {
     
     while (fgets(buffer, sizeof(buffer), fp) != 0) {
          //fputs(buffer, output_stream);
+
+        // Necesito mas memoria
+        resizeArray(1);
 
         // Armo mi struct, una por línea
         len = strlen(buffer);
@@ -86,6 +93,12 @@ static void cat(FILE *fp, Cromo* cromos) {
         strcpy(cromo.pais, pais);
 
         // Lo agrego al array
-        cromos[i++] = cromo;
+        array[i++] = cromo;
     }
+}
+
+void resizeArray(size_t n)
+{
+    /* TODO: Handle reallocations errors. */
+    array = realloc(array, n * sizeof *array);
 }
