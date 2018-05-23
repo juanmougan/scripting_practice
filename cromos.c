@@ -13,6 +13,9 @@ typedef struct Cromo {
     char pais[MAX_PAIS];
 } Cromo;
 
+// Esto deberia ser asignación dinámica de memoria, no?
+typedef Cromo cromos[1000];
+
 /*
  * Leer de a una línea por vez (hasta MAX_LINE - 1 caracteres)
  * y armar el struct
@@ -73,5 +76,12 @@ static void cat(FILE *fp, FILE *output_stream) {
         // Para el pais
         strncpy(pais, buffer + 35 + 1, len);
         printf("País: %s\n", pais);
+
+        // Crear un cromo con los datos
+        Cromo cromo;
+        cromo.numero = numero;
+        strcpy(cromo.nombre, nombre);
+        strcpy(cromo.pais, pais);
+
     }
 }
